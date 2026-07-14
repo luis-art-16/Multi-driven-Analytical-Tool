@@ -8,7 +8,7 @@ The platform runs entirely in Docker and consists of three main synchronously co
 * **Backend**: An API developed in Python using FastAPI, integrating the logic for model fusion and handling secure communication with both the Mistral AI API and the Resend notification service.
 * **Database**: A MongoDB instance dedicated to persisting generated schemas, project metadata, and execution history.
 
-## 2. Prerequisites & Setup
+## 2. Requirements & Setup
 To run the platform, you must have **Docker Desktop** installed.
 
 ### 2.1. Environment Variables & API Keys
