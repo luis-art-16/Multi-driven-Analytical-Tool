@@ -14,7 +14,6 @@ To run the platform, you must have **Docker Desktop** installed.
 ### 2.1. Environment Variables & API Keys
 In the '.env' file, you must configure your API keys:
 
-.env
 MONGO_URL=mongodb://mongo:27017
 MISTRAL_API_KEY=your_mistral_api_key_here
 RESEND_API_KEY=your_resend_api_key_here
