@@ -21,9 +21,9 @@ RESEND_API_KEY=your_resend_api_key_here
 ### 2.2. Running the Project
 From the root directory of the project (where the docker-compose.yml is located), execute the following command in your terminal:
 
-Bash
 docker-compose up -d --build
-2.3. Access Points
+
+### 2.3. Access Points
 Once the containers are running, you can access the services at the following URLs:
 
 User Interface (Frontend): http://localhost:3000
