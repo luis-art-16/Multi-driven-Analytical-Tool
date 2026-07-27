@@ -1,6 +1,8 @@
 # BE.NEUTRAL: A Hybrid Human–AI Approach to Multi-Driven Analytical Modeling
 This repository contains the functional prototype developed as part of a research grant, focusing on the implementation of an analytical modeling methodology assisted by Large Language Models (LLMs). The system automates the creation of Data Warehouses and storytelling dashboards by seamlessly merging database schemas (Data-Driven approach) with strategic business requirements formulated in i* (Requirements-Driven approach).
 
+## Demonstration Video:** [Click here to watch the tool in action](https://youtu.be/oj_Ua2Bve58)
+
 ## 1. System Architecture
 The platform runs entirely in Docker and consists of three main synchronously communicating services:
 
