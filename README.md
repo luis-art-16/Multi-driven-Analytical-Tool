@@ -1,4 +1,4 @@
-# Multi-driven-Analytical-Tool: A Hybrid Human–AI Approach to Multi-Driven Analytical Modeling
+# A Tool for End-to-End Analytics: From Multi-driven Analytical Modeling to Goal-oriented Data Storytelling
 This repository contains the functional prototype developed as part of a research grant, which focuses on implementing an analytical modeling methodology assisted by Large Language Models (LLMs). The system automates the creation of Data Warehouses and storytelling dashboards by seamlessly merging database schemas (Data-Driven approach) with strategic business requirements formulated in i* (Requirements-Driven approach).
 
 ## Demonstration Video:** [Click here to watch the tool in action](https://youtu.be/oj_Ua2Bve58)
