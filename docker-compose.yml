@@ -2,12 +2,10 @@
 services:
   mongo:
     image: mongo:7.0
-    container_name: pipeline_mongo
+    container_name: pipeline_mongo_new
     restart: always
-    ports:
-      - "27017:27017"
     volumes:
-      - mongo_data:/data/db
+      - mongo_data_new:/data/db
     networks:
       default:
         aliases:
@@ -24,7 +22,7 @@ services:
     depends_on:
       - mongo
     ports:
-      - "8001:8000" # Changed to 8001 to avoid conflicts with the legacy project
+      - "8002:8000" # Changed to 8001 to avoid conflicts with the legacy project
     volumes:
       - ./backend:/app
       - /app/node_modules
@@ -38,11 +36,11 @@ services:
     container_name: pipeline_frontend_
     restart: always
     environment:
-      - VITE_API_URL=http://192.168.233.227:8001 # The frontend now calls the API on port 8001
+      - VITE_API_URL=http://192.168.233.227:8002 # The frontend now calls the API on port 8001
     depends_on:
       - backend
     ports:
-      - "3000:5173"
+      - "3001:5173"
     volumes:
       - ./frontend:/app
       - /app/node_modules
@@ -50,4 +48,4 @@ services:
       - default
 
 volumes:
-  mongo_data:
+  mongo_data_new:

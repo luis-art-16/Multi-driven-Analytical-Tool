@@ -23,7 +23,7 @@ api_key = os.environ.get("MISTRAL_API_KEY")
 # 2. INICIALIZA O CLIENT AQUI! (Usando a versão Async e com o timeout de 5 minutos que querias)
 client = MistralAsyncClient(api_key=api_key, timeout=300)
 
-async def call_mistral_api(prompt: str, temperature: float = None, model: str = None) -> str:
+async def call_mistral_api(prompt: str, temperature: float = None, model: str = None, response_format: dict = None ) -> str:
     """
     Universal function to call Mistral AI at any stage of the project.
     """
@@ -42,7 +42,8 @@ async def call_mistral_api(prompt: str, temperature: float = None, model: str = 
         response = await client.chat(
             model=selected_model,
             messages=messages,
-            temperature=temp
+            temperature=temp,
+	    response_format=response_format
         )
         
         return response.choices[0].message.content

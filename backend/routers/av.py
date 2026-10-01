@@ -108,7 +108,8 @@ async def generate_av(req: AvRequest):
         prompt = build_av_prompt(json.dumps(req.mdam_model), json.dumps(req.istar_model))
         
     try:
-        raw_response = await call_mistral_api(prompt, req.temperature)
+        raw_response = await call_mistral_api(prompt, req.temperature, response_format={"type": "json_object"} )
+        logger.error(f"AV RAW RESPONSE: \n{raw_response}")
         data = extract_json(raw_response)
         
         if isinstance(data, dict):
