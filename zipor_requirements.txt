@@ -1,0 +1,42 @@
+Consider the following set of analytical requirements. Consider that Strategic Goals (SGs) are related to the main objectives of the business process that are being enhanced, representing a desired change from a current situation to a future one; Decision Goals (DGs) represent decisions that use information to provide benefits for the organization, operationalizing the SGs into actions by answering the question, "How can a strategic goal be achieved?"; Information Goals guide the information needed to achieve a DG by responding to the question, "How can decision goals be achieved in terms of information required?" IGs outline the data that must be gathered, usually through analysis. As a result, they can be described in terms of goals or in terms of the analysis process. Consider that IGs are decomposed into Tasks (T). 
+
+Based on this, suggest an iStar model to represent the analytical requirements. For the derived SGs, DGs and IGs, classify them as Must have, Should have or Could have, considering the classification available in the set of analytical requirements. 
+
+The analytical requirements are:
+T1 - Monitor the evolution of vibrations by sensor and when they pass their threshold. (Should have)
+T2 - Monitor the evolution of spindle electrical current and speed, and when they pass their threshold. (Should have)
+T3 - Monitor the evolution of speed rate. (Should have)
+T4 - Analyze the average values of velocity and acceleration vibrations, temperature, spindle rotation and electrical current, and speed rate. (Should have)
+T5 - Identify the material that causes the most anomalies. (Must have)
+T6 - Identify the tool that causes the most anomalies. (Must have)
+T7 - Identify the tool x material pair that causes the most anomalies. (Must have)
+T8 - Determine which sensor registers the most anomalies. (Must have)
+T9 - Determine how many anomalies were caused by the motor. (Must have)
+T10 - Calculate the average time between anomalies. (Must have)
+T11 - Calculate the average time it takes to resume work after an anomaly. (Must have)
+T12 - Calculate the total time the machine was stopped. (Must have)
+T13 - Analyze the average machine occupancy. (Could have)
+T14 - Determine the average number of materials cut in a day. (Could have)
+T15 - Determine the number of tool changes in a day. (Could have)
+T16 - Calculate the total tool change time. (Could have)
+T17 - Identify the most used tool sequence. (Could have)
+T18 - Identify the tool that is used the longest. (Could have)
+T19 - Analyze the average speed values, electrical current and rotation values by type of material. (Could have)
+T20 - Analyze the average values of speed, electrical current and rotation per tool. (Could have)
+T21 - Determine which operation takes the longest per type of material and tool. (Could have)
+
+CRITICAL OUTPUT INSTRUCTIONS:
+You MUST output ONLY a valid JSON object representing the i* model. The JSON MUST strictly follow this schema to map the dependencies:
+{
+  "actors": [
+    { "id": "a1", "name": "Decision-maker", "type": "Role" },
+    { "id": "a2", "name": "Manufacturing System", "type": "Target System" }
+  ],
+  "dependencies": [
+    { "depender": "Decision-maker", "dependee": "Manufacturing System", "dependum": "[Name of Goal/Task] (Must/Should/Could have)", "type": "Strategic Goal" },
+    { "depender": "Decision-maker", "dependee": "Manufacturing System", "dependum": "[Name of Goal/Task]", "type": "Decision Goal" },
+    { "depender": "Decision-maker", "dependee": "Manufacturing System", "dependum": "[Name of Goal/Task]", "type": "Information Goal" },
+    { "depender": "Decision-maker", "dependee": "Manufacturing System", "dependum": "[T1 - Monitor...]", "type": "Task" }
+  ]
+}
+Ensure EVERY SINGLE one of the 21 Tasks is listed and properly linked to its parent IG, DG, and SG.

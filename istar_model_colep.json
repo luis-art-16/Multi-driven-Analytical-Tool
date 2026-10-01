@@ -1,0 +1,124 @@
+{
+  "actors": [
+    {
+      "id": "a1",
+      "name": "Decision-maker",
+      "type": "Role"
+    },
+    {
+      "id": "a2",
+      "name": "Production Process",
+      "type": "Target System"
+    }
+  ],
+  "dependencies": [
+    {
+      "id": "SG1",
+      "depender": "Decision-maker",
+      "dependee": "Production Process",
+      "dependum": "Reduce Shelf Time",
+      "type": "Strategic Goal",
+      "priority": "Must have",
+      "parent": null
+    },
+    {
+      "id": "DG1",
+      "depender": "Decision-maker",
+      "dependee": "Production Process",
+      "dependum": "Optimize Scheduling to minimize waiting time",
+      "type": "Decision Goal",
+      "priority": "Must have",
+      "parent": "Reduce Shelf Time"
+    },
+    {
+      "id": "IG1",
+      "depender": "Decision-maker",
+      "dependee": "Production Process",
+      "dependum": "Identify periods of high product accumulation between stages",
+      "type": "Information Goal",
+      "priority": "Should have",
+      "parent": "Optimize Scheduling to minimize waiting time"
+    },
+    {
+      "id": "IG2",
+      "depender": "Decision-maker",
+      "dependee": "Production Process",
+      "dependum": "Monitor average idle time between operations",
+      "type": "Information Goal",
+      "priority": "Must have",
+      "parent": "Optimize Scheduling to minimize waiting time"
+    },
+    {
+      "id": "SG2",
+      "depender": "Decision-maker",
+      "dependee": "Production Process",
+      "dependum": "Reduce Energy Consumption",
+      "type": "Strategic Goal",
+      "priority": "Must have",
+      "parent": null
+    },
+    {
+      "id": "DG2",
+      "depender": "Decision-maker",
+      "dependee": "Production Process",
+      "dependum": "Optimising Work Centers",
+      "type": "Decision Goal",
+      "priority": "Must have",
+      "parent": "Reduce Energy Consumption"
+    },
+    {
+      "id": "IG3",
+      "depender": "Decision-maker",
+      "dependee": "Production Process",
+      "dependum": "Identify the type of production with the highest consumption",
+      "type": "Information Goal",
+      "priority": "Should have",
+      "parent": "Optimising Work Centers"
+    },
+    {
+      "id": "IG4",
+      "depender": "Decision-maker",
+      "dependee": "Production Process",
+      "dependum": "Calculate the average energy consumption by work center",
+      "type": "Information Goal",
+      "priority": "Must have",
+      "parent": "Optimising Work Centers"
+    },
+    {
+      "id": "IG5",
+      "depender": "Decision-maker",
+      "dependee": "Production Process",
+      "dependum": "Calculate total consumption by hour",
+      "type": "Information Goal",
+      "priority": "Could have",
+      "parent": "Optimising Work Centers"
+    },
+    {
+      "id": "DG3",
+      "depender": "Decision-maker",
+      "dependee": "Production Process",
+      "dependum": "Prioritize low-energy Production Routes",
+      "type": "Decision Goal",
+      "priority": "Should have",
+      "parent": "Reduce Energy Consumption"
+    },
+    {
+      "id": "IG6",
+      "depender": "Decision-maker",
+      "dependee": "Production Process",
+      "dependum": "Identify sequences of operation with lowest average energy consumption",
+      "type": "Information Goal",
+      "priority": "Must have",
+      "parent": "Prioritize low-energy Production Routes"
+    },
+    {
+      "id": "IG7",
+      "depender": "Decision-maker",
+      "dependee": "Production Process",
+      "dependum": "Compare energy consumption across similar product variants",
+      "type": "Information Goal",
+      "priority": "Could have",
+      "parent": "Prioritize low-energy Production Routes"
+    }
+  ]
+}

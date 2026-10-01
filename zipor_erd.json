@@ -1,0 +1,59 @@
+{
+  "project": "Industry-UP - CEI Use Case",
+  "data_sources": [
+    {
+      "name": "vibr_monitor_YYYY_MMDD.csv",
+      "description": "Stores data about the sensors' measurements, including the anomaly values[cite: 209]. Updated weekly[cite: 210].",
+      "columns": [
+        "Time", 
+        "MType", 
+        "Tool", 
+        "V1", "V2", "V3", "V4", "V5", "V6", "V7", "V8", "V9", "V10", "V11", "V12", 
+        "Temp", 
+        "SCurr", 
+        "SRpm", 
+        "Status_Operation_flag",
+        "anomaly"
+      ]
+    },
+    {
+      "name": "components.csv",
+      "description": "Contains contextual information about components (sensors or motor)[cite: 211].",
+      "columns": [
+        "component_id", 
+        "component_name", 
+        "component_type"
+      ]
+    },
+    {
+      "name": "variables.csv",
+      "description": "Contains contextual information about the variables measured by the sensors, in particular their threshold, important to detect anomalies[cite: 212, 213]. The mapping between sensors and variables is implicit here[cite: 227].",
+      "columns": [
+        "variable_id", 
+        "variable_name", 
+        "threshold", 
+        "unit", 
+        "component_id"
+      ]
+    },
+    {
+      "name": "mat_types.csv",
+      "description": "Contains contextual information about the materials cut by the sensorized machine[cite: 213, 214].",
+      "columns": [
+        "material_id", 
+        "material_type", 
+        "hardness"
+      ]
+    },
+    {
+      "name": "tool_description.csv",
+      "description": "Contains contextual information about the tools used to cut the materials[cite: 214].",
+      "columns": [
+        "tool_id", 
+        "tool_name", 
+        "description",
+        "current"
+      ]
+    }
+  ]
+}

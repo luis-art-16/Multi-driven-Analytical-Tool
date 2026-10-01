@@ -1,0 +1,68 @@
+{
+  "project": "COLEP - Real Case (3 Facts Architecture)",
+  "tables": [
+    {
+      "name": "Customer",
+      "columns": ["customer_id", "customer_name", "region"],
+      "primary_key": "customer_id"
+    },
+    {
+      "name": "Material",
+      "columns": ["material_id", "material_name", "variant_type"],
+      "primary_key": "material_id"
+    },
+    {
+      "name": "WorkCenter",
+      "columns": ["workcenter_id", "workcenter_name", "department"],
+      "primary_key": "workcenter_id"
+    },
+    {
+      "name": "Operation",
+      "columns": ["operation_id", "operation_name", "setup_time_standard"],
+      "primary_key": "operation_id"
+    },
+    {
+      "name": "Date",
+      "columns": ["date_id", "day", "month", "year"],
+      "primary_key": "date_id"
+    },
+    {
+      "name": "Time",
+      "columns": ["time_id", "hour", "minute"],
+      "primary_key": "time_id"
+    },
+    {
+      "name": "Order",
+      "table_type": "fact",
+      "columns": ["order_fact_id", "customer_id", "date_id", "time_id", "total_value", "target_delivery_date"],
+      "primary_key": "order_fact_id",
+      "foreign_keys": [
+        {"column": "customer_id", "references": "Customer.customer_id"},
+        {"column": "date_id", "references": "Date.date_id"},
+        {"column": "time_id", "references": "Time.time_id"}
+      ]
+    },
+    {
+      "name": "Production",
+      "table_type": "fact",
+      "columns": ["production_fact_id", "workcenter_id", "material_id", "operation_id", "sequence_number", "idle_time_minutes", "accumulated_products"],
+      "primary_key": "production_fact_id",
+      "foreign_keys": [
+        {"column": "workcenter_id", "references": "WorkCenter.workcenter_id"},
+        {"column": "material_id", "references": "Material.material_id"},
+        {"column": "operation_id", "references": "Operation.operation_id"}
+      ]
+    },
+    {
+      "name": "Energy_Consumption",
+      "table_type": "fact",
+      "columns": ["consumption_id", "workcenter_id", "date_id", "time_id", "gas_value_m3"],
+      "primary_key": "consumption_id",
+      "foreign_keys": [
+        {"column": "workcenter_id", "references": "WorkCenter.workcenter_id"},
+        {"column": "date_id", "references": "Date.date_id"},
+        {"column": "time_id", "references": "Time.time_id"}
+      ]
+    }
+  ]
+}
