@@ -13,9 +13,25 @@ from typing import List
 import pandas as pd
 import io
 import json
+import re
 from services.mistral_client import call_mistral_api
+import logging
+
+logger= logging.getLogger("pipeline_api")
 
 router = APIRouter(prefix="/ddcm", tags=["DDCM"])
+
+def extract_json(response: str):
+    try:
+        match = re.search(r'(\{.*\}|\[.*\])', response, re.DOTALL)
+        if not match:
+            raise ValueError("JSON not found in Mistral response.")
+
+        return json.loads(match.group(0))
+
+    except Exception as e:
+        logger.error(f"DDCM JSON PARSE ERROR: {str(e)}")
+        raise ValueError(f"Failed to parse JSON: {str(e)}")
 
 def build_ddcm_prompt(schemas_info: str) -> str:
     return f"""You are an expert Database Architect. Based on the following CSV file schemas (headers and sample data), generate a Conceptual Entity-Relationship Model (ERD) in strictly 3rd Normal Form (3NF).
@@ -64,11 +80,9 @@ async def generate_ddcm(files: List[UploadFile] = File(...)):
     
     try:
         response_text = await call_mistral_api(prompt, temperature=0.1)
-        
-        # Cleans Mistral's output in case it includes markdown
-        cleaned = response_text.strip().strip("`").removeprefix("json").strip()
-        der_json = json.loads(cleaned)
-        
+
+        der_json = extract_json(response_text)
+
         return {"status": "success", "der_model": der_json}
     except json.JSONDecodeError:
         raise HTTPException(status_code=500, detail="Mistral returned an invalid JSON.")

@@ -43,7 +43,7 @@ def send_email_task(receiver_email: str, project_name: str, save_time: str):
     try:
         email_params = {
             "from": "Multi-driven Analytical Tool Pipeline <onboarding@resend.dev>",
-            "to": ["put_your_email_here"], # YOUR DESTINATION EMAIL HERE!
+            "to": ["luispedrobaptista0@gmail.com"], # YOUR DESTINATION EMAIL HERE!
             "subject": f"Multi-driven Analytical Tool - Project '{project_name}' Saved!",
             "html": f"""
             <h3>Congratulations!</h3>

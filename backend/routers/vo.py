@@ -125,7 +125,6 @@ async def generate_vo(req: VoRequest):
         logger.info(f"-> Calling Mistral API... (Lightweight prompt size: {len(prompt)} characters)")
         raw_response = await call_mistral_api(prompt, req.temperature)
         
-        logger.info("-> RAW RESPONSE FROM MISTRAL:")
         logger.info(raw_response)
         
         data = extract_json(raw_response)

@@ -71,7 +71,6 @@ async def generate_ddam(req: DdamRequest):
         match = re.search(r'\{.*\}', response, re.DOTALL)
         
         if not match:
-            print(f"Raw response: {response}") 
             raise ValueError("No JSON block found in the AI response.")
             
         json_str = match.group(0)
