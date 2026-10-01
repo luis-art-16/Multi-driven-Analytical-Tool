@@ -10,8 +10,12 @@ The platform runs entirely in Docker and consists of three main synchronously co
 * **Backend**: An API developed in Python using FastAPI, integrating the logic for model fusion and handling secure communication with both the Mistral AI API and the Resend notification service.
 * **Database**: A MongoDB instance dedicated to persisting generated schemas, project metadata, and execution history.
 
+The three services communicate through Docker's internal network, while the Frontend and Backend are exposed through configurable host ports.
+
 ## 2. Requirements & Setup
-To run the platform, you must have **Docker Desktop** installed.
+To run the platform, Docker must be installed on the host machine.
+
+For Windows and macOS, **Docker Desktop** can be used. On Linux servers, Docker Engine and Docker Compose can be used directly.
 
 ## 2.1. Environment Variables and API Keys
 
@@ -23,45 +27,144 @@ To configure the system, follow these steps:
 
 2. For the platform to work, you need to generate API keys for the two external services used:
 
-    - Mistral AI API: Access the Mistral AI developer portal, create an account, and generate an API key for the natural language processing functionality.
+    - **Mistral AI API**: Access the Mistral AI developer portal, create an account, and generate an API key for the natural language processing functionality.
 
-    - Resend API: Access the Resend platform, create an account, and generate an API key for the email notification service.
+    - **Resend API**: Access the Resend platform, create an account, and generate an API key for the email notification service.
 
-3. Open the newly renamed .env file in VS Code or another editor of your choice and replace the example values with the API keys you generated, filling in the following fields:
+3. Open the newly renamed .env file in a code editor of your choice and replace the example values with the API keys you generated, filling in the following fields:
 
-    MISTRAL_API_KEY=your_mistral_api_key
-    RESEND_API_KEY=your_resend_api_key
+MONGO_URL=mongodb://mongo:27017 
+MONGO_DB_NAME=pipeline_db 
 
-4. Do not modify the MONGO_URL value already defined in the .env file.
+FRONTEND_URL=http://localhost:3001 
 
-IMPORTANT: The file must be named .env. The application does not use the .env.example file directly. This file is only provided as a template for configuring the required environment variables.
+MISTRAL_API_KEY=your_mistral_api_key 
+MISTRAL_MODEL=ministral-8b-2512 
+MISTRAL_TEMPERATURE_DEFAULT=0.2 
+
+EMAIL_ENABLED=false 
+RESEND_API_KEY=your_resend_api_key 
+EMAIL_FROM_NAME=your_sender_name 
+EMAIL_SENDER=your_sender_email
+
+The exact values for the environment variables may be adapted according to the deployment environment.
+
+IMPORTANT: 
+* The file must be named .env. The application does not use the .env.example file directly.
+* This file is only provided as a template for configuring the required environment variables.
+* The .env.example file is provided only as a template.
+* The MONGO_URL value should point to the MongoDB service defined in docker-compose.yml.
+* The Mistral model can be changed according to the models available for the configured Mistral AI account.
 
 After completing these steps, the project will be configured and ready to run using Docker.
 
-### 2.2. Running the Project
+## 2.2. Running the Project
 From the root directory of the project (where the docker-compose.yml is located), execute the following command in your terminal:
 
 docker-compose up -d --build
 
-### 2.3. Access Points
+To verify that the containers are running:
+
+docker compose ps
+
+To inspect the application logs:
+
+docker compose logs
+
+Individual services can also be inspected using:
+
+docker compose logs backend
+docker compose logs frontend
+docker compose logs mongo
+
+## 2.3. Access Points
 Once the containers are running, you can access the services at the following URLs:
 
-User Interface (Frontend): http://localhost:3000
+* User Interface (Frontend): http://localhost:3001
+* API: http://localhost:8002
+* API Documentation (Swagger): http://localhost:8002/docs
 
-API Documentation (Swagger): http://localhost:8001/docs
+The ports above correspond to the current Docker Compose configuration and can be changed if required by the deployment environment.
 
-### 3. Methodological Pipeline Flow
-The system follows a parallel "Y-shaped" pipeline:
+## 3. Methodological Pipeline Flow
+The system follows a parallel Y-shaped analytical pipeline, combining data-driven and requirements-driven perspectives.
 
-DDCM (Data-Driven Conceptual Model): Loading the conceptual schema of the source database (JSON/CSV).
+## 3.1. DDCM — Data-Driven Conceptual Model
 
-DDAM (Data-Driven Analytical Model): Automatic generation of data-oriented schemas.
+The process starts by loading the conceptual schema of the source database, provided in JSON/CSV format.
 
-RSR (Requirements Structuring and Refinement): Input of business requirements to generate the hierarchical i* model or input your i* model already generated.
+## 3.2. DDAM — Data-Driven Analytical Model
 
-RDAM (Requirements-Driven Analytical Model): Generation of the analytical model strictly oriented towards decision-making needs.
+The system automatically generates an analytical model based on the available data structures and source database schema.
 
-MDAM (Multi-Driven Analytical Model): The semantic fusion of the DDAM and RDAM models. This step preserves SQL data types and highlights intersections and data gaps.
+## 3.3. RSR — Requirements Structuring and Refinement
 
-AV & VO (Analytical Visualizations & Visualizations Organization): Intelligent suggestion of analytical metrics and dimensions, concluding with the rendering of the final interactive dashboard.
+Business requirements are introduced and structured to generate a hierarchical i* model. Alternatively, an existing i* model can be provided as input.
 
+## 3.4. RDAM — Requirements-Driven Analytical Model
+
+The system generates an analytical model oriented towards the decision-making requirements identified in the requirements-driven branch.
+
+## 3.5. MDAM — Multi-Driven Analytical Model
+
+The DDAM and RDAM models are semantically fused into a Multi-Driven Analytical Model.
+
+This stage combines the information obtained from the data-driven and requirements-driven approaches while preserving relevant SQL data types and identifying intersections and data gaps between the two perspectives.
+
+## 3.6. AV — Analytical Visualization
+
+The Analytical Visualization stage uses the resulting analytical model to intelligently suggest relevant analytical metrics and dimensions for data analysis.
+
+The generated information is subsequently used as input for the visualization stage.
+
+## 3.7. VO — Visualization Organization
+
+The Visualization Organization stage organizes the selected analytical elements and supports the generation of the final interactive storytelling dashboard.
+
+## 4. Main Technologies
+
+The prototype is implemented using the following technologies:
+
+* Frontend: React, Zustand, ReactFlow, Vite
+* Backend: Python, FastAPI
+* Database: MongoDB
+* LLM Integration: Mistral AI API
+* Email Notifications: Resend API
+* Containerization: Docker and Docker Compose
+
+## 5. Project Structure
+
+The main components of the repository are organized as follows:
+
+.
+├── backend/
+│   ├── routers/
+│   ├── services/
+│   └── ...
+├── frontend/
+│   └── ...
+├── docker-compose.yml
+├── .env.example
+└── README.md
+
+The Backend contains the API endpoints and analytical processing logic, while the Frontend contains the user interface and visualization components.
+
+## 6. Deployment and Testing
+
+The application can be deployed using Docker Compose in both local development environments and Linux server environments.
+
+For server deployments, the host ports defined in docker-compose.yml can be adapted when other applications are already using the default ports.
+
+The application should be verified after deployment by checking:
+
+1. Docker container status.
+2. Backend API availability.
+3. Frontend accessibility.
+4. MongoDB connectivity.
+5. Successful execution of the DDAM, RDAM, MDAM and AV stages.
+
+The current implementation has been tested with the complete Docker-based architecture and the main analytical pipeline stages.
+
+## 7. License and Research Context
+
+This repository contains a functional research prototype developed in the context of a research grant. Its implementation and documentation may evolve as the research work progresses.
