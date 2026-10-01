@@ -1,69 +1,67 @@
-## BE.NEUTRAL: PIPELINE
-
-    Esta pasta contém o protótipo funcional desenvolvido no âmbito de uma bolsa de investigação, focado na implementação de uma metodologia de modelação analítica assistida por Large Language Models (LLMs). O sistema automatiza a criaçaõ de Data Warehouses e dashboards narrativos através da junção de esquemas de bases de dados (Via Data-Driven) e requisitos estratégicos de negócio formulados em i* (Via Requirements-Driven).
+# A Tool for End-to-End Analytics: From Multi-driven Analytical Modeling to Goal-oriented Data Storytelling
+The repository includes the functional prototype developed under a research grant, which focuses on implementing an analytical modeling methodology utilizing Large Language Models (LLMs). The system achieves automation of Data Warehouse creation and the production of storytelling dashboards by combining database schemas (using a data-driven approach) with the strategic business requirements defined in i* (using a requirements-driven approach).
 
 ## Demonstration Video:** [Click here to watch the tool in action](https://youtu.be/oj_Ua2Bve58)
 
+## 1. System Architecture
+The platform runs entirely in Docker and consists of three main synchronously communicating services:
 
- ## 1. Arquitetura do Sistema
-A plataforma encontra-se a correr totalmente em Docker, sendo composta por três serviços principais que comunicam de forma síncrona:
+* **Frontend**: A React-based interface featuring global state management via Zustand and dynamic diagram rendering using ReactFlow.
+* **Backend**: An API developed in Python using FastAPI, integrating the logic for model fusion and handling secure communication with both the Mistral AI API and the Resend notification service.
+* **Database**: A MongoDB instance dedicated to persisting generated schemas, project metadata, and execution history.
 
-    - Frontend: Interface desenvolvida em React com gestão de estado via Zustand e renderização de diagramas dinâmicos através de ReactFlow.
+## 2. Requirements & Setup
+To run the platform, you must have **Docker Desktop** installed.
 
-    - Backend: API desenvolvida em FastAPI (Python) que integra a lógica de fusão de modelos e a comunicação com a API da Mistral AI e o serviço de notificações Resend.
+## 2.1. Environment Variables and API Keys
 
-    - Database: Instância de MongoDB para a persistência de esquemas gerados, metadados dos projetos e histórico de execuções.
+In the root folder of the project (where the docker-compose.yml file is located), there is a file called .env.example. This file is provided only as a configuration template and must be renamed to .env before running the project.
 
-## 2. Pré-requisitos e Configuração
-    Para a execução da plataforma, é necessária a instalar o Docker Desktop e a obter as chaves API para os serviços externos utilizados.
+To configure the system, follow these steps:
 
-## 2.1. Variáveis de Ambiente e Chaves de API
-    Na pasta principal do projeto (onde se encontra o ficheiro docker-compose.yml), encontra-se um ficheiro chamado .env.example. Para configurar o sistema, siga estes passos:
+1. Rename the .env.example file to .env.
 
-    1. Mude o nome de .env.example para apenas .env
+2. For the platform to work, you need to generate API keys for the two external services used:
 
-    2. Para que a plataforma funcione, necessita de gerar duas chaves de acesso (gratuitas) para os serviços externos utilizados:
+    - Mistral AI API: Access the Mistral AI developer portal, create an account, and generate an API key for the natural language processing functionality.
 
-        - API da Mistral AI: Aceda ao portal para developers da Mistral AI, crie uma conta e gere uma chave de API para o processamento de linguagem natural.
+    - Resend API: Access the Resend platform, create an account, and generate an API key for the email notification service.
 
-        - API do Resend: Aceda ao portal do Resend, crie uma conta e gere uma chave de API para o serviço de envio de emails.
+3. Open the newly renamed .env file in VS Code or another editor of your choice and replace the example values with the API keys you generated, filling in the following fields:
 
-    3. Abra o novo ficheiro .env no VScode ou outra plataforma à escolha e cole as chaves que gerou à frente dos campos MISTRAL_API_KEY= e RESEND_API_KEY=. Não altere o valor do MONGO_URL que já lá se encontra.
+    MISTRAL_API_KEY=your_mistral_api_key
+    RESEND_API_KEY=your_resend_api_key
 
+4. Do not modify the MONGO_URL value already defined in the .env file.
 
-## 2.2. Execução do Projeto
-    A partir da raiz do projeto (onde se localiza o ficheiro docker-compose.yml), execute o seguinte comando no terminal:
-        
-        docker-compose up -d --build 
+IMPORTANT: The file must be named .env. The application does not use the .env.example file directly. This file is only provided as a template for configuring the required environment variables.
 
-## 2.3. Pontos de Acesso
-      -  Interface de Utilizador (Frontend): http://localhost:3000
+After completing these steps, the project will be configured and ready to run using Docker.
 
-      -  Documentação da API (Swagger): http://localhost:8000/docs   
+### 2.2. Running the Project
+From the root directory of the project (where the docker-compose.yml is located), execute the following command in your terminal:
 
-## 3. Fluxo Metodológico da Pipeline
-    O sistema segue o pipeline paralelo em "Y" descrito na metodologia proposta:
+docker-compose up -d --build
 
-    DDCM (Data-Driven Conceptual Model): Carregamento do esquema conceptual da base de dados fonte (JSON/CSV).
+### 2.3. Access Points
+Once the containers are running, you can access the services at the following URLs:
 
-    DDAM (Data-Driven Analytical Model): Geração automática de esquemas i* orientados aos dados disponíveis (representação visual a azul).
+User Interface (Frontend): http://localhost:3000
 
-    RSR (Requirements Structuring and Refinement): Introdução de requisitos de negócio para geração do modelo i*.
+API Documentation (Swagger): http://localhost:8001/docs
 
-    RDAM (Requirements-Driven Analytical Model): Geração do modelo analítico orientado às necessidades de decisão (representação visual a laranja).
+### 3. Methodological Pipeline Flow
+The system follows a parallel "Y-shaped" pipeline:
 
-    MDAM (Multi-Driven Analytical Model): Fusão dos modelos DDAM e RDAM, preservando tipos de dados SQL e destacando interseções e lacunas de dados (representação visual de acordo com as ligações com as tabelas já geradas).
+DDCM (Data-Driven Conceptual Model): Loading the conceptual schema of the source database (JSON/CSV).
 
-    AV & VO (Analytical Visualizations & Visualizations Organization): Sugestão de métricas e dimensões analíticas seguida da renderização do dashboard final organizado por objetivos estratégicos.
+DDAM (Data-Driven Analytical Model): Automatic generation of data-oriented schemas.
 
-## 4. Nota para Desenvolvimento Local (Opcional)
+RSR (Requirements Structuring and Refinement): Input of business requirements to generate the hierarchical i* model or input your i* model already generated.
 
-Como o projeto está todo em docker, **não é necessário** configurar o ambiente localmente para executar a aplicação. No entanto, caso pretenda explorar o código do backend no seu IDE com suporte a *linting* e *autocomplete*, pode criar um ambiente virtual Python:
+RDAM (Requirements-Driven Analytical Model): Generation of the analytical model strictly oriented towards decision-making needs.
 
-1. Navegue para a pasta do backend: `cd backend`
-2. Crie o ambiente virtual: `python -m venv venv`
-3. Ative o ambiente: 
-   - Windows: `venv\Scripts\activate`
-   - Mac/Linux: `source venv/bin/activate`
-4. Instale as dependências: `pip install -r requirements.txt`
+MDAM (Multi-Driven Analytical Model): The semantic fusion of the DDAM and RDAM models. This step preserves SQL data types and highlights intersections and data gaps.
+
+AV & VO (Analytical Visualizations & Visualizations Organization): Intelligent suggestion of analytical metrics and dimensions, concluding with the rendering of the final interactive dashboard.
 
